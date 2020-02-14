@@ -9,6 +9,8 @@ import org.apache.jackrabbit.core.config.ConfigurationException;
 import org.apache.jackrabbit.core.config.RepositoryConfig;
 import org.apache.jackrabbit.core.config.RepositoryConfigurationParser;
 import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.xml.sax.InputSource;
 
 import java.io.FileNotFoundException;
@@ -24,27 +26,24 @@ public class JackrabbitRepositoryConfigFactory {
 
     @Getter
     @Setter
-    private String configFilename = "repository.xml";
+    private Resource repositoryConfig = new ClassPathResource("repository.xml");
 
     /**
-     * Creates a JackRabbit RepositoryConfig. Reads properties from file and add default
+     * Creates a JackRabbit RepositoryConfig.
      *
      * @return RepositoryConfig
-     * @throws IOException
-     * @throws ConfigurationException
+     * @throws IOException when can't loaf repository config file
+     * @throws BeanCreationException when can't create RepositoryConfig
      */
-    public RepositoryConfig create() throws Exception {
+    public RepositoryConfig create() throws IOException, BeanCreationException {
         Properties properties = new Properties();
         properties.setProperty(RepositoryConfigurationParser.REPOSITORY_HOME_VARIABLE, config.getRepositoryHome());
 
         try {
-            InputStream is = JackrabbitRepositoryConfigFactory.class.getClassLoader().getResourceAsStream(configFilename);
-            if (is == null) {
-                throw new FileNotFoundException(configFilename);
-            }
+            InputStream is = repositoryConfig.getInputStream();
             return RepositoryConfig.create(new InputSource(is), properties);
         } catch(ConfigurationException e){
-            throw new BeanCreationException("Unable to configure repository with: " + configFilename + " and " + properties);
+            throw new BeanCreationException("Unable to configure repository with: " + repositoryConfig + " and " + properties);
         }
     }
 }
