@@ -1,4 +1,4 @@
-package pl.com.softproject.jcr;
+package io.alapierre.jcr;
 
 import org.jetbrains.annotations.NotNull;
 

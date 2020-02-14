@@ -1,12 +1,12 @@
-package pl.com.softproject.jcr;
+package io.alapierre.jcr;
 
+import io.alapierre.jcr.exceptions.DataAccessException;
+import io.alapierre.jcr.exceptions.JcrSystemException;
+import io.alapierre.jcr.exceptions.UncategorizedDataAccessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jackrabbit.commons.JcrUtils;
 import org.jetbrains.annotations.NotNull;
 import org.xml.sax.ContentHandler;
-import pl.com.softproject.jcr.exceptions.DataAccessException;
-import pl.com.softproject.jcr.exceptions.JcrSystemException;
-import pl.com.softproject.jcr.exceptions.UncategorizedDataAccessException;
 
 import javax.jcr.*;
 import javax.jcr.nodetype.NodeType;
@@ -25,7 +25,7 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static pl.com.softproject.jcr.SessionFactoryUtils.translateException;
+import static io.alapierre.jcr.SessionFactoryUtils.translateException;
 
 /**
  * Created 12.02.2020 copyright original authors 2020

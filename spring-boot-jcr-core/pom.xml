@@ -4,15 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>pl.com.softproject</groupId>
     <artifactId>spring-boot-jcr-core</artifactId>
-    <version>1.0-SNAPSHOT</version>
 
     <parent>
-        <groupId>pl.com.softproject</groupId>
+        <groupId>io.alapierre</groupId>
         <artifactId>spring-boot-jcr</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
+    <properties>
+        <jackrabbit-version>2.20.0</jackrabbit-version>
+    </properties>
 
     <dependencies>
         <!-- The JCR API -->
@@ -26,7 +28,6 @@
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>jackrabbit-core</artifactId>
-            <version>2.20.0</version>
         </dependency>
 
         <dependency>

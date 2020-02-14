@@ -1,10 +1,10 @@
-package pl.com.softproject.jcr;
+package io.alapierre.jcr;
 
+import io.alapierre.jcr.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-import pl.com.softproject.jcr.exceptions.*;
-import pl.com.softproject.jcr.exceptions.ConcurrencyFailureException;
+import io.alapierre.jcr.exceptions.ConcurrencyFailureException;
 
 import javax.jcr.*;
 import javax.jcr.lock.LockException;

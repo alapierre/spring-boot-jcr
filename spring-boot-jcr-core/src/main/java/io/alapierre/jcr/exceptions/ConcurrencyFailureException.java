@@ -1,4 +1,4 @@
-package pl.com.softproject.jcr.exceptions;
+package io.alapierre.jcr.exceptions;
 
 /**
  * Created 12.02.2020 copyright original authors 2020

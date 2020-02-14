@@ -1,4 +1,4 @@
-package pl.com.softproject.jcr;
+package io.alapierre.jcr;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
