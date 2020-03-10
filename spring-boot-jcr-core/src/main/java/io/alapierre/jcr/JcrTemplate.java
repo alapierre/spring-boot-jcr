@@ -19,6 +19,7 @@ import javax.jcr.version.VersionIterator;
 import javax.jcr.version.VersionManager;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -271,8 +272,8 @@ public class JcrTemplate {
     }
 
     public Node putFile(
-            Node parent, String name, String mime,
-            InputStream data, Calendar date) throws RepositoryException {
+            @NotNull Node parent, @NotNull String name, @NotNull String mime,
+            @NotNull InputStream data, @NotNull Calendar date) throws RepositoryException {
 
         Binary binary = parent.getSession().getValueFactory().createBinary(data);
         try {
@@ -337,6 +338,15 @@ public class JcrTemplate {
             return StreamSupport.stream(spliterator, false);
         });
     }
+
+    public InputStream readFile(Node node) throws RepositoryException {
+        return JcrUtils.readFile(node);
+    }
+
+    public void readFile(Node node, OutputStream output) throws RepositoryException, IOException {
+        JcrUtils.readFile(node, output);
+    }
+
 }
 
 
