@@ -271,6 +271,56 @@ public class JcrTemplate {
         return node.isNodeType("mix:versionable");
     }
 
+    public Node putVersionableFile(
+            @NotNull Node parent, @NotNull String name, @NotNull String mime,
+            @NotNull InputStream data, @NotNull Calendar date) throws RepositoryException {
+
+        Binary binary = parent.getSession().getValueFactory().createBinary(data);
+        VersionManager manager = parent.getSession().getWorkspace().getVersionManager();
+        Node file = null;
+        boolean existing = JcrUtils.getNodeIfExists(parent, name) != null;
+
+        try {
+            file = JcrUtils.getOrAddNode(parent, name, NodeType.NT_FILE);
+            file.addMixin("mix:versionable");
+            Node content = JcrUtils.getOrAddNode(file, Node.JCR_CONTENT, NodeType.NT_RESOURCE);
+            content.addMixin("mix:versionable");
+
+            if (existing) {
+                log.debug("Checking in file {}", file.getPath());
+                manager.checkin(file.getPath());
+            } else {
+                log.debug("Create new file {}", name);
+            }
+
+            content.setProperty(Property.JCR_MIMETYPE, mime);
+            String[] parameters = mime.split(";");
+            for (int i = 1; i < parameters.length; i++) {
+                int equals = parameters[i].indexOf('=');
+                if (equals != -1) {
+                    String parameter = parameters[i].substring(0, equals);
+                    if ("charset".equalsIgnoreCase(parameter.trim())) {
+                        content.setProperty(
+                                Property.JCR_ENCODING,
+                                parameters[i].substring(equals + 1).trim());
+                    }
+                }
+            }
+
+            content.setProperty(Property.JCR_LAST_MODIFIED, date);
+            content.setProperty(Property.JCR_DATA, binary);
+            return file;
+        } finally {
+            binary.dispose();
+            if(file!=null) {
+                if (!file.isCheckedOut()) {
+                    log.debug("Checking out file {}", file.getPath());
+                    manager.checkout(file.getPath());
+                }
+            }
+        }
+    }
+
     public Node putFile(
             @NotNull Node parent, @NotNull String name, @NotNull String mime,
             @NotNull InputStream data, @NotNull Calendar date) throws RepositoryException {
