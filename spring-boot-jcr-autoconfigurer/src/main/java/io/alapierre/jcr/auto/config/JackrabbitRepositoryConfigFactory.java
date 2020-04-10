@@ -24,10 +24,6 @@ public class JackrabbitRepositoryConfigFactory {
 
     private final JcrProperties config;
 
-    @Getter
-    @Setter
-    private Resource repositoryConfig = new ClassPathResource("repository.xml");
-
     /**
      * Creates a JackRabbit RepositoryConfig.
      *
@@ -40,10 +36,11 @@ public class JackrabbitRepositoryConfigFactory {
         properties.setProperty(RepositoryConfigurationParser.REPOSITORY_HOME_VARIABLE, config.getRepositoryHome());
 
         try {
-            InputStream is = repositoryConfig.getInputStream();
+            InputStream is = config.getRepositoryConfig().getInputStream();
             return RepositoryConfig.create(new InputSource(is), properties);
         } catch(ConfigurationException e){
-            throw new BeanCreationException("Unable to configure repository with: " + repositoryConfig + " and " + properties);
+            log.error("error creating jackrabit config {}", e.getMessage());
+            throw new BeanCreationException("Unable to configure repository with: " + config.getRepositoryConfig() + " and " + properties, e);
         }
     }
 }

@@ -3,6 +3,8 @@ package io.alapierre.jcr.auto;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
@@ -25,5 +27,7 @@ public class JcrProperties {
 
     @Value("jackrabbit")
     private String repositoryHome;
+
+    private Resource repositoryConfig = new ClassPathResource("repository.xml");
 
 }
