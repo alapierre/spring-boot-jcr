@@ -35,6 +35,11 @@ public class JackrabbitRepositoryConfigFactory {
         Properties properties = new Properties();
         properties.setProperty(RepositoryConfigurationParser.REPOSITORY_HOME_VARIABLE, config.getRepositoryHome());
 
+        log.info("Registering JackRabbit environment variables for use in repository-config.xml");
+        properties.setProperty("sp.jcr.datasource-user", config.getDatasourceUser());
+        properties.setProperty("sp.jcr.datasource-password", config.getDatasourcePassword());
+        properties.setProperty("sp.jcr.datasource-url", config.getDatasourceUrl());
+
         try {
             InputStream is = config.getRepositoryConfig().getInputStream();
             return RepositoryConfig.create(new InputSource(is), properties);

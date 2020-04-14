@@ -30,4 +30,13 @@ public class JcrProperties {
 
     private Resource repositoryConfig = new ClassPathResource("repository.xml");
 
+    @NotEmpty
+    private String datasourceUser;
+
+    @NotEmpty
+    private String datasourcePassword;
+
+    @NotEmpty
+    private String datasourceUrl;
+
 }

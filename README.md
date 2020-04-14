@@ -15,7 +15,7 @@ Just add
 <dependency>        
     <groupId>io.alapierre</groupId>
     <artifactId>spring-boot-jcr-autoconfigurer</artifactId>
-    <version>1.0-SNAPSHOT</version> 
+    <version>1.4</version> 
 </dependency>
 ```
 
@@ -26,6 +26,23 @@ application.properties
 ```
 sp.jcr.user-name=
 sp.jcr.password=
+sp.jcr.datasource-user=
+sp.jcr.datasource-password=
+sp.jcr.datasource-url=
+```
+
+example using variables in repository.xml
+
+```xml
+        <PersistenceManager class="org.apache.jackrabbit.core.persistence.pool.PostgreSQLPersistenceManager">
+            <param name="driver" value="org.postgresql.Driver"/>
+            <param name="url" value="${sp.jcr.datasource-url}"/>
+            <param name="schema" value="postgresql"/> <!-- ddl file name, not database schema name -->
+            <param name="user" value="${sp.jcr.datasource-user}"/>
+            <param name="password" value="${sp.jcr.datasource-password}"/>
+            <param name="schemaObjectPrefix" value="version_"/>
+            <param name="externalBLOBs" value="false"/>
+        </PersistenceManager>
 ```
 
 repository.xml
