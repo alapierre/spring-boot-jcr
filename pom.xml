@@ -13,13 +13,13 @@
 
     <groupId>io.alapierre</groupId>
     <artifactId>spring-boot-jcr</artifactId>
-    <version>1.5</version>
+    <version>1.6-SNAPSHOT</version>
 
     <scm>
         <connection>scm:git:git://github.com/alapierre/spring-boot-jcr.git</connection>
         <developerConnection>scm:git:git@github.com/alapierre/spring-boot-jcr.git</developerConnection>
         <url>https://github.com/alapierre/spring-boot-jcr</url>
-        <tag>spring-boot-jcr-1.5</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <modules>
