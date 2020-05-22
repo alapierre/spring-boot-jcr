@@ -57,7 +57,7 @@ public class JcrTemplate {
         } catch (IOException | RuntimeException ex) {
             throw new UncategorizedDataAccessException(ex);
         } finally {
-            log.debug("closing session");
+            log.debug("closing session for thread: {}", Thread.currentThread().getName());
             session.logout();
         }
     }

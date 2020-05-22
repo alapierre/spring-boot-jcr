@@ -28,7 +28,7 @@ public class SessionFactoryUtils {
             // check if there is any transaction going on
             SessionHolder sessionHolder = (SessionHolder) TransactionSynchronizationManager.getResource(sessionFactory);
             if (sessionHolder != null && sessionHolder.getSession() != null) {
-                log.debug("session from TransactionSynchronizationManager");
+                log.debug("Return existing session from TransactionSynchronizationManager");
                 return sessionHolder.getSession();
             }
 
@@ -37,7 +37,9 @@ public class SessionFactoryUtils {
                         + "and configuration does not allow creation of non-transactional one here");
             }
 
-            log.debug("Opening JCR Session");
+            if(log.isDebugEnabled())
+                log.debug("Opening new JCR Session for thread {}", Thread.currentThread().getName());
+
             Session session = sessionFactory.getSession();
 
             if (TransactionSynchronizationManager.isSynchronizationActive()) {
@@ -51,7 +53,7 @@ public class SessionFactoryUtils {
                         sessionHolder, sessionFactory));
                 TransactionSynchronizationManager.bindResource(sessionFactory, sessionHolder);
             } else {
-                log.debug("Synchronization is not active");
+                log.debug("JCR transaction synchronization is not active");
             }
 
             return session;
