@@ -10,10 +10,6 @@
         <version>1.6-SNAPSHOT</version>
     </parent>
 
-    <properties>
-        <jackrabbit-version>2.20.0</jackrabbit-version>
-    </properties>
-
     <dependencies>
         <!-- The JCR API -->
         <dependency>
