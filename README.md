@@ -17,7 +17,7 @@ Just add
 <dependency>        
     <groupId>io.alapierre</groupId>
     <artifactId>spring-boot-jcr-autoconfigurer</artifactId>
-    <version>1.4</version> 
+    <version>1.6</version> 
 </dependency>
 ```
 
