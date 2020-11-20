@@ -1,3 +1,5 @@
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
+
 # spring-boot-jcr
 Java Content Repository SpringBoot integration 
 
