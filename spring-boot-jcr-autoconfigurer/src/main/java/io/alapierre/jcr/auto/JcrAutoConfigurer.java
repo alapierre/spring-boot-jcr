@@ -3,23 +3,24 @@ package io.alapierre.jcr.auto;
 import io.alapierre.jcr.JcrSessionFactory;
 import io.alapierre.jcr.JcrTemplate;
 import io.alapierre.jcr.SessionFactory;
+import io.alapierre.jcr.TenantProvider;
 import io.alapierre.jcr.auto.config.JackrabbitRepositoryConfigFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jackrabbit.api.JackrabbitRepository;
 import org.apache.jackrabbit.core.RepositoryImpl;
 import org.apache.jackrabbit.core.config.RepositoryConfig;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
 import javax.jcr.Credentials;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.SimpleCredentials;
+import java.util.Optional;
 
 /**
  * Created 13.02.2020 copyright original authors 2020
@@ -62,8 +63,15 @@ public class JcrAutoConfigurer {
     }
 
     @Bean
-    public JcrTemplate jcrTemplate(SessionFactory sessionFactory) {
-        return new JcrTemplate(sessionFactory);
+    public JcrTemplate jcrTemplate(SessionFactory sessionFactory, ObjectProvider<TenantProvider> tenantProvider) {
+        TenantProvider provider = tenantProvider.getIfAvailable();
+        if( provider != null) {
+            log.info("JCR Template initializing with tenantProvider");
+            return new JcrTemplate(sessionFactory, provider);
+        } else {
+            log.info("JCR Template initializing without tenantProvider");
+            return new JcrTemplate(sessionFactory, Optional::empty);
+        }
     }
 
 }
