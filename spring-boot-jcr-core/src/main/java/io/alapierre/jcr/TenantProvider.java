@@ -7,6 +7,7 @@ import java.util.Optional;
  *
  * @author Karol Bryzgiel <karol.bryzgiel@soft-project.pl>
  */
+@FunctionalInterface
 public interface TenantProvider {
 
     Optional<String> getTenant();

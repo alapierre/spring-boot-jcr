@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
@@ -70,9 +71,10 @@ public class JcrTemplate {
         log.debug("get session from SessionFactoryUtils");
         Session session = SessionFactoryUtils.getSession(sessionFactory, true);
 
-        if (tenantProvider.getTenant().isPresent()) {
-            log.info("Get session for tenantName: [{}]", tenantProvider.getTenant().get());
-            session = session.getRepository().login(tenantProvider.getTenant().get());
+        Optional<String> tenant = tenantProvider.getTenant();
+        if (tenant.isPresent()) {
+            log.info("Get session for tenantName: [{}]", tenant.get());
+            session = session.getRepository().login(tenant.get());
         }
 
         return session;
@@ -303,23 +305,7 @@ public class JcrTemplate {
                 log.debug("Create new file {}", name);
             }
 
-            content.setProperty(Property.JCR_MIMETYPE, mime);
-            String[] parameters = mime.split(";");
-            for (int i = 1; i < parameters.length; i++) {
-                int equals = parameters[i].indexOf('=');
-                if (equals != -1) {
-                    String parameter = parameters[i].substring(0, equals);
-                    if ("charset".equalsIgnoreCase(parameter.trim())) {
-                        content.setProperty(
-                                Property.JCR_ENCODING,
-                                parameters[i].substring(equals + 1).trim());
-                    }
-                }
-            }
-
-            content.setProperty(Property.JCR_LAST_MODIFIED, date);
-            content.setProperty(Property.JCR_DATA, binary);
-            return file;
+            return getNode(mime, date, binary, file, content);
         } finally {
             binary.dispose();
             if(file != null && !file.isCheckedOut()) {
@@ -340,26 +326,30 @@ public class JcrTemplate {
             Node content = JcrUtils.getOrAddNode(file, Node.JCR_CONTENT, NodeType.NT_RESOURCE);
             content.addMixin("mix:versionable");
 
-            content.setProperty(Property.JCR_MIMETYPE, mime);
-            String[] parameters = mime.split(";");
-            for (int i = 1; i < parameters.length; i++) {
-                int equals = parameters[i].indexOf('=');
-                if (equals != -1) {
-                    String parameter = parameters[i].substring(0, equals);
-                    if ("charset".equalsIgnoreCase(parameter.trim())) {
-                        content.setProperty(
-                                Property.JCR_ENCODING,
-                                parameters[i].substring(equals + 1).trim());
-                    }
-                }
-            }
-
-            content.setProperty(Property.JCR_LAST_MODIFIED, date);
-            content.setProperty(Property.JCR_DATA, binary);
-            return file;
+            return getNode(mime, date, binary, file, content);
         } finally {
             binary.dispose();
         }
+    }
+
+    private Node getNode(@NotNull String mime, @NotNull Calendar date, Binary binary, Node file, Node content) throws RepositoryException {
+        content.setProperty(Property.JCR_MIMETYPE, mime);
+        String[] parameters = mime.split(";");
+        for (int i = 1; i < parameters.length; i++) {
+            int equals = parameters[i].indexOf('=');
+            if (equals != -1) {
+                String parameter = parameters[i].substring(0, equals);
+                if ("charset".equalsIgnoreCase(parameter.trim())) {
+                    content.setProperty(
+                            Property.JCR_ENCODING,
+                            parameters[i].substring(equals + 1).trim());
+                }
+            }
+        }
+
+        content.setProperty(Property.JCR_LAST_MODIFIED, date);
+        content.setProperty(Property.JCR_DATA, binary);
+        return file;
     }
 
     public void checkin(@NotNull String path) {
@@ -385,9 +375,11 @@ public class JcrTemplate {
 
             VersionIterator it = history.getAllVersions();
 
+            boolean debug = log.isDebugEnabled();
+
             while (it.hasNext()) {
                 Version v = it.nextVersion();
-                log.debug("v.getCreated().getTime()");
+                if (debug) log.debug("v.getCreated().getTime()");
             }
 
             @SuppressWarnings("unchecked")
