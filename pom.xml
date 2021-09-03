@@ -28,7 +28,7 @@
     </modules>
 
     <properties>
-        <jackrabbit-version>2.21.4</jackrabbit-version>
+        <jackrabbit-version>2.21.7</jackrabbit-version>
     </properties>
 
     <build>
