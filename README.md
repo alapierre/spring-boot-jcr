@@ -1,3 +1,5 @@
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
+
 # spring-boot-jcr
 Java Content Repository SpringBoot integration 
 
@@ -15,7 +17,7 @@ Just add
 <dependency>        
     <groupId>io.alapierre</groupId>
     <artifactId>spring-boot-jcr-autoconfigurer</artifactId>
-    <version>1.4</version> 
+    <version>1.6</version> 
 </dependency>
 ```
 
