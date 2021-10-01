@@ -57,7 +57,6 @@ public class JcrTemplate {
             return action.doInJcr(session);
         } catch (RepositoryException ex) {
             throw translateException(ex);
-            // IOException are not converted here
         } catch (IOException | RuntimeException ex) {
             throw new UncategorizedDataAccessException(ex);
         } finally {
@@ -81,7 +80,7 @@ public class JcrTemplate {
         Optional<String> tenant = tenantProvider.getTenant();
         if (tenant.isPresent()) {
             logoutForCurrentThread(session);
-            log.info("Get session for tenantName: [{}] thread: {}", tenant.get(), Thread.currentThread().getName());
+            log.info("Get session for tenantName: [{}] thread: {}", tenant.get(), Thread.currentThread().getName()); //TODO: change to debug
             session = session.getRepository().login(tenant.get());
         }
 
