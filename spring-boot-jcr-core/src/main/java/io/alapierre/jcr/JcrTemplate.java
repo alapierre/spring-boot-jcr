@@ -61,9 +61,16 @@ public class JcrTemplate {
         } catch (IOException | RuntimeException ex) {
             throw new UncategorizedDataAccessException(ex);
         } finally {
-            log.debug("closing session for thread: {}", Thread.currentThread().getName());
-            if(session != null)
-                session.logout();
+            logoutForCurrentThread(session);
+        }
+    }
+
+    private void logoutForCurrentThread(Session session) {
+        log.debug("closing session for thread: {}", Thread.currentThread().getName());
+        if(session != null)
+            session.logout();
+        else {
+            log.warn("session was null for thread: {}", Thread.currentThread().getName());
         }
     }
 
@@ -72,9 +79,9 @@ public class JcrTemplate {
         Session session = SessionFactoryUtils.getSession(sessionFactory, true);
 
         Optional<String> tenant = tenantProvider.getTenant();
-        if (tenant.isPresent() && session != null) {
-            session.logout();
-            log.info("Get session for tenantName: [{}]", tenant.get());
+        if (tenant.isPresent()) {
+            logoutForCurrentThread(session);
+            log.info("Get session for tenantName: [{}] thread: {}", tenant.get(), Thread.currentThread().getName());
             session = session.getRepository().login(tenant.get());
         }
 
