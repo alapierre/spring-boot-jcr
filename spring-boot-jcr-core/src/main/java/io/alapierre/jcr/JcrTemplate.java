@@ -72,7 +72,7 @@ public class JcrTemplate {
         Session session = SessionFactoryUtils.getSession(sessionFactory, true);
 
         Optional<String> tenant = tenantProvider.getTenant();
-        if (tenant.isPresent()) {
+        if (tenant.isPresent() && session != null) {
             session.logout();
             log.info("Get session for tenantName: [{}]", tenant.get());
             session = session.getRepository().login(tenant.get());
