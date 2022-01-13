@@ -1,4 +1,5 @@
 [![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
+[![Maven Central](http://img.shields.io/maven-central/v/io.alapierre/spring-boot-jcr)](https://search.maven.org/artifact/io.alapierre/spring-boot-jcr)
 
 # spring-boot-jcr
 Java Content Repository SpringBoot integration 
