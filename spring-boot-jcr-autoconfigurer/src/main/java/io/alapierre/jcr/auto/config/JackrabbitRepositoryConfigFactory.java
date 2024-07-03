@@ -1,19 +1,14 @@
 package io.alapierre.jcr.auto.config;
 
 import io.alapierre.jcr.auto.JcrProperties;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.jackrabbit.core.config.ConfigurationException;
 import org.apache.jackrabbit.core.config.RepositoryConfig;
 import org.apache.jackrabbit.core.config.RepositoryConfigurationParser;
 import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.xml.sax.InputSource;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;

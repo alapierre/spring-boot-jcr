@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>13.0</version>
+            <version>24.1.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -47,7 +47,7 @@
             <plugin>
                 <groupId>se.eris</groupId>
                 <artifactId>notnull-instrumenter-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>1.1.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -60,7 +60,7 @@
                     <dependency>
                         <groupId>org.jetbrains</groupId>
                         <artifactId>annotations</artifactId>
-                        <version>13.0</version>
+                        <version>24.1.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
