@@ -17,6 +17,7 @@ public interface JcrCallback<T> {
      * Called by {@link JcrTemplate#execute} within an active JCR
      * {@link javax.jcr.Session}. It is not responsible for logging
      * out of the <code>Session</code> or handling transactions.
+     * @param session current jcr session
      */
     T doInJcr(Session session) throws IOException, RepositoryException;
 
