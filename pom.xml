@@ -13,7 +13,7 @@
 
     <groupId>io.alapierre</groupId>
     <artifactId>spring-boot-jcr</artifactId>
-    <version>1.11-SNAPSHOT</version>
+    <version>1.10-SNAPSHOT</version>
 
     <scm>
         <connection>scm:git:git://github.com/alapierre/spring-boot-jcr.git</connection>
