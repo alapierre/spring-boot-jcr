@@ -15,6 +15,24 @@
     <artifactId>spring-boot-jcr</artifactId>
     <version>1.10-SNAPSHOT</version>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Adrian Lapierre</name>
+            <email>al@alapierre.io</email>
+        </developer>
+        <developer>
+            <name>Karol Bryzgiel</name>
+            <email>karol.bryzgiel@itrust.dev</email>
+        </developer>
+    </developers>
+
     <scm>
         <connection>scm:git:git://github.com/alapierre/spring-boot-jcr.git</connection>
         <developerConnection>scm:git:git@github.com/alapierre/spring-boot-jcr.git</developerConnection>
