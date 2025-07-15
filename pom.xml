@@ -46,7 +46,7 @@
     </modules>
 
     <properties>
-        <jackrabbit-version>2.22.0</jackrabbit-version>
+        <jackrabbit-version>2.22.1</jackrabbit-version>
     </properties>
 
     <build>
