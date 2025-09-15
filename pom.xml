@@ -8,7 +8,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.3.1</version>
-        <relativePath /> <!-- lookup parent from repository -->
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>io.alapierre</groupId>
@@ -46,7 +46,7 @@
     </modules>
 
     <properties>
-        <jackrabbit-version>2.22.0</jackrabbit-version>
+        <jackrabbit-version>2.22.2</jackrabbit-version>
     </properties>
 
     <build>
